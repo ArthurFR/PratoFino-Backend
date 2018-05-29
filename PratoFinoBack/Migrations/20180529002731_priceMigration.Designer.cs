@@ -11,9 +11,10 @@ using System;
 namespace PratoFinoBack.Migrations
 {
     [DbContext(typeof(PratoFinoDbContext))]
-    partial class PratoFinoDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180529002731_priceMigration")]
+    partial class priceMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
