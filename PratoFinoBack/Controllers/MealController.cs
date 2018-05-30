@@ -62,6 +62,7 @@ namespace PratoFinoBack.Controllers
 
             meal.Name = item.Name;
             meal.Restaurant = item.Restaurant;
+            meal.RestaurantId = item.RestaurantId;
             meal.Price = item.Price;
             context.Meals.Update(meal);
             context.SaveChanges();
