@@ -23,7 +23,7 @@ namespace PratoFinoBack.Controllers
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public IActionResult GetById(long id)
         {
             var meal = context.Meals.Find(id);
             if(meal == null)
@@ -42,12 +42,12 @@ namespace PratoFinoBack.Controllers
                 return;
             }
 
-            context.Add(meal);
-            context.SaveChanges();
+            this.context.Meals.Add(meal);
+            this.context.SaveChanges();
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody]Meal item)
+        public IActionResult Update(long id, [FromBody]Meal item)
         {
             if(item == null || item.Id != id )
             {
@@ -69,7 +69,7 @@ namespace PratoFinoBack.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete (int id)
+        public IActionResult Delete (long id)
         {
             var meal = context.Meals.Find(id);
             if (meal == null)

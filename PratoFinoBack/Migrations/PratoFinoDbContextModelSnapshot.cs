@@ -22,14 +22,15 @@ namespace PratoFinoBack.Migrations
 
             modelBuilder.Entity("PratoFinoBack.Models.Meal", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
                     b.Property<double>("Price");
 
-                    b.Property<int?>("RestaurantId");
+                    b.Property<long>("RestaurantId");
 
                     b.HasKey("Id");
 
@@ -40,12 +41,13 @@ namespace PratoFinoBack.Migrations
 
             modelBuilder.Entity("PratoFinoBack.Models.Restaurant", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("RestaurantId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("RestaurantName");
 
-                    b.HasKey("Id");
+                    b.HasKey("RestaurantId");
 
                     b.ToTable("Restaurants");
                 });
@@ -54,7 +56,8 @@ namespace PratoFinoBack.Migrations
                 {
                     b.HasOne("PratoFinoBack.Models.Restaurant", "Restaurant")
                         .WithMany("Meals")
-                        .HasForeignKey("RestaurantId");
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

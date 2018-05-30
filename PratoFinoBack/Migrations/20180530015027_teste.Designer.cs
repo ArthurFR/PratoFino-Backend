@@ -11,8 +11,8 @@ using System;
 namespace PratoFinoBack.Migrations
 {
     [DbContext(typeof(PratoFinoDbContext))]
-    [Migration("20180529002731_priceMigration")]
-    partial class priceMigration
+    [Migration("20180530015027_teste")]
+    partial class teste
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -23,14 +23,15 @@ namespace PratoFinoBack.Migrations
 
             modelBuilder.Entity("PratoFinoBack.Models.Meal", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name");
 
                     b.Property<double>("Price");
 
-                    b.Property<int?>("RestaurantId");
+                    b.Property<long>("RestaurantId");
 
                     b.HasKey("Id");
 
@@ -41,12 +42,13 @@ namespace PratoFinoBack.Migrations
 
             modelBuilder.Entity("PratoFinoBack.Models.Restaurant", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
+                    b.Property<long>("RestaurantId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Name");
+                    b.Property<string>("RestaurantName");
 
-                    b.HasKey("Id");
+                    b.HasKey("RestaurantId");
 
                     b.ToTable("Restaurants");
                 });
@@ -55,7 +57,8 @@ namespace PratoFinoBack.Migrations
                 {
                     b.HasOne("PratoFinoBack.Models.Restaurant", "Restaurant")
                         .WithMany("Meals")
-                        .HasForeignKey("RestaurantId");
+                        .HasForeignKey("RestaurantId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

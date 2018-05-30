@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace PratoFinoBack.Migrations
 {
-    public partial class InitialMigration : Migration
+    public partial class teste : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -13,23 +13,24 @@ namespace PratoFinoBack.Migrations
                 name: "Restaurants",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    RestaurantId = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true)
+                    RestaurantName = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Restaurants", x => x.Id);
+                    table.PrimaryKey("PK_Restaurants", x => x.RestaurantId);
                 });
 
             migrationBuilder.CreateTable(
                 name: "Meals",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<long>(nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(nullable: true),
-                    RestaurantId = table.Column<int>(nullable: true)
+                    Price = table.Column<double>(nullable: false),
+                    RestaurantId = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -38,8 +39,8 @@ namespace PratoFinoBack.Migrations
                         name: "FK_Meals_Restaurants_RestaurantId",
                         column: x => x.RestaurantId,
                         principalTable: "Restaurants",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "RestaurantId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

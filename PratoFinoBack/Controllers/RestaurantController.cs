@@ -21,8 +21,8 @@ namespace PratoFinoBack.Controllers
             return context.Restaurants.ToList();
         }
 
-        [HttpGet("{id}", Name = "GetRestaurant")]
-        public IActionResult GetById(int id)
+        [HttpGet("{id}")]
+        public IActionResult GetById(long id)
         {
             var restaurant = context.Restaurants.Find(id);
             if(restaurant == null)
@@ -46,9 +46,9 @@ namespace PratoFinoBack.Controllers
         }
 
         [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Restaurant item)
+        public IActionResult Update(long id, [FromBody] Restaurant item)
         {
-            if(item == null || item.Id != id)
+            if(item == null || item.RestaurantId != id)
             {
                 return BadRequest();
             }
@@ -59,7 +59,7 @@ namespace PratoFinoBack.Controllers
                 return NotFound();
             }
 
-            restaurant.Name = item.Name;
+            restaurant.RestaurantName = item.RestaurantName;
             
             context.Restaurants.Update(restaurant);
             context.SaveChanges();
@@ -68,14 +68,19 @@ namespace PratoFinoBack.Controllers
         }
 
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public IActionResult Delete(long id)
         {
             var restaurant = context.Restaurants.Find(id);
             if(restaurant == null)
             {
                 return NotFound();
             }
-
+            
+            foreach(Meal meal in restaurant.Meals){
+                context.Meals.Remove(meal);
+            }
+            context.SaveChanges();
+            
             context.Restaurants.Remove(restaurant);
             context.SaveChanges();
             return NoContent();
